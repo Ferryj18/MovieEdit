@@ -47,13 +47,7 @@ class HomeVC: UIViewController{
   func setUpAction(){
   }
   
-//  func setUpData(){
-//    let from = DateToString.shared.formatTodayDateToString(date: DateManipulator.decreaseDateByOneMonth(from: currentDate) ?? Date())
-//    let to = DateToString.shared.formatTodayDateToString(date: currentDate)
-//    presenter?.gstartGetMovieHeader(apiKey: String)
-//    presenter?.GetAllMovies(apiKey: apiKey)
-//  }
-//  
+
 
 }
 extension HomeVC: PTVHomeProtocol{

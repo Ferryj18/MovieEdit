@@ -12,7 +12,6 @@ class HomeMovieCVCell: UICollectionViewCell {
   
   @IBOutlet weak var imgAllMovie: UIImageView!
   
-  @IBOutlet weak var lblNoData: UILabel!
   var parentViewController: UIViewController?
   var presenter: VTPHomeProtocol?
   static let identifier = "HomeMovieCVCell"
