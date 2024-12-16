@@ -17,8 +17,8 @@ class HomeVC: UIViewController{
   
   var homeInteractor: PTIHomeProtocol = HomeInteractor()
   var presenter: VTPHomeProtocol?
-  var dataTrending : [Title] = []
-  var dataTo : [Title] = []
+  var dataAllMovie : [Title] = []
+  var dataMovie : [Title] = []
   var apiKey = "883b20661c35f38e181243f7361f28f3"
   var indexNumb: Int?
   var url: String?
@@ -79,7 +79,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource{
     guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeMovieCollTVCell.identifier, for: indexPath)  as? HomeMovieCollTVCell else {
       return UITableViewCell()
     }
-    cell.configure(with: dataTo)
+    cell.configure(with: dataAllMovie)
     switch indexPath.section {
       
     case sections.Popular.rawValue:
@@ -123,7 +123,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource{
 }
 extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate{
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataTo.count
+    return dataMovie.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,8 +131,8 @@ extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate{
       return UICollectionViewCell() // Return a default UICollectionViewCell if dequeue fails
     }
     
-    // Configure the cell as needed
-    // cell.configure(with: someData)
+//    // Configure the cell as needed
+//    cell.configure(with: dataMovie)
     
     return cell
   }

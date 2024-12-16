@@ -8,30 +8,6 @@
 import Foundation
 import SwiftyJSON
 
-// Response Model
-struct MovieResponseModel: Decodable {
-    let page: Int
-    let results: [TrendingMovieModel]
-}
-
-// Individual Movie Model
-struct TrendingMovieModel: Decodable {
-    let id: Int
-    let title: String
-    let original_title: String
-    let overview: String
-    let poster_path: String?
-    let backdrop_path: String?
-    let media_type: String
-    let adult: Bool
-    let original_language: String
-    let genre_ids: [Int]
-    let popularity: Double
-    let release_date: String?
-    let video: Bool
-    let vote_average: Double
-    let vote_count: Int
-}
 struct TrendingTitleResponse: Codable {
     let results: [Title]
 }
@@ -64,42 +40,12 @@ struct IdVideoElement: Codable {
 struct YoutubeSearchResponse: Codable {
     let items: [VideoElement]
 }
-
-//// Root Response Model untuk Semua Jenis Film (Now Playing, Popular, Top Rated)
-//struct AllMoviesResponseModel: Decodable {
-//    let page: Int
-//    let results: AllMoviesResults
-//    let dates: MovieDatesModel
-//}
-//
-//// Model untuk Memisahkan Semua Jenis Film
-//struct AllMoviesResults: Decodable {
-//    let nowPlaying: [MovieModel]
-//    let popular: [MovieModel]
-//    let topRated: [MovieModel]
-//}
-//
-//// Movie Dates Model (jika ada batas tanggal)
-//struct MovieDatesModel: Decodable {
-//    let maximum: String
-//    let minimum: String
-//}
-//
-//// Model untuk Setiap Film
-//struct MovieModel: Decodable {
-//    let id: Int
-//    let title: String
-//    let original_title: String
-//    let overview: String
-//    let poster_path: String?
-//    let backdrop_path: String?
-//    let media_type: String
-//    let adult: Bool
-//    let original_language: String
-//    let genre_ids: [Int]
-//    let popularity: Double
-//    let release_date: String?
-//    let video: Bool
-//    let vote_average: Double
-//    let vote_count: Int
-//}
+enum APIError: Error {
+  case failedTogetData
+}
+struct Constants {
+    static let API_KEY = "883b20661c35f38e181243f7361f28f3"
+    static let baseURL = "https://api.themoviedb.org"
+    static let YoutubeAPI_KEY = "AIzaSyDqX8axTGeNpXRiISTGL7Tya7fjKJDYi4g"
+    static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
+}
