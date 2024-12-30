@@ -7,10 +7,11 @@
 import Foundation
 import UIKit
 
-class HomePresenter: VTPHomeProtocol {
+import Foundation
 
-  
-  
+class HomePresenter: VTPHomeProtocol {
+ 
+ 
   
     
     //MARK: - Property HomePresenter
@@ -28,20 +29,16 @@ class HomePresenter: VTPHomeProtocol {
     
     //MARK: - Function HomePresenter
     
-  func startGetMovieHeader(apiKey: String, completion: @escaping (Result<[Title], Error>) -> Void) {
-    interactor?.getMovieHeader(apiKey: apiKey, completion: completion)
+  func getTrendingMovies(key: String){
+        interactor?.getTrendingMovies(key: key)
     }
     
-  func getAllMovies(category: sections, completion: @escaping (Result<[Title], Error>) -> Void) {
-      interactor?.getAllMovies(category: category, completion: completion)
-  }
+    func getAllMovies(key: String) {
+        interactor?.getAllMovies(key: key)
+    }
     
-  func startNavToDetail(data: [Title], nav: UINavigationController) {
+    func startNavToDetail(data: [Title], nav: UINavigationController) {
         router?.navToDetail(data: data, nav: nav)
-    }
-    
-  func startNavToDetailFromCell(data: [Title], index: Int, nav: UINavigationController) {
-        router?.navToDetailFromCell(data: data, index: index, nav: nav)
     }
     
     
@@ -49,9 +46,19 @@ class HomePresenter: VTPHomeProtocol {
 
     //MARK: - Extension HomePresenter
 extension  HomePresenter : ITPHomeProtocol {
+  func onSuccessGetTrendingMovies(data: [Title]) {
+    view?.successGetTrendingMovies(data: data)
+  }
+  
+  func onSuccessGetAllMovies(data: [Title]) {
+    view?.successGetAllMovies(data: data)
+  }
+  
+  
     func onFailedGet(message: String) {
         view?.failedGet(message: message)
     }
     
 
 }
+

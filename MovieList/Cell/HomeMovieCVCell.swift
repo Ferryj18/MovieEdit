@@ -15,7 +15,7 @@ class HomeMovieCVCell: UICollectionViewCell {
   var parentViewController: UIViewController?
   var presenter: VTPHomeProtocol?
   static let identifier = "HomeMovieCVCell"
-  var dataMovie: [Title] = []
+  var dataAllMovie: [Title] = []
   var tapGesture : UITapGestureRecognizer!
   var url: String?
   static func nib() -> UINib{
@@ -41,14 +41,19 @@ class HomeMovieCVCell: UICollectionViewCell {
   }
 
   func configure(with title: Title) {
-          // Set gambar untuk imageView menggunakan SDWebImage
-          if let posterPath = title.poster_path {
-              let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-            imgAllMovie.sd_setImage(with: url, completed: nil)
-          } else {
-            imgAllMovie.image = UIImage(named: "") // Placeholder jika poster tidak ada
-          }
+    if let posterPath = title.posterPath {
+      let imageUrlString = "https://image.tmdb.org/t/p/w500\(posterPath)"
+      print("Image URL: \(imageUrlString)")
+      let url = URL(string: imageUrlString)
+      imgAllMovie.sd_setImage(with: url) { (image, error, cacheType, url) in
+        if let error = error {
+          print("Error loading image: \(error.localizedDescription)")
+        } else {
+          print("Image loaded successfully from URL: \(url?.absoluteString ?? "")")
+        }
       }
+    }
+  }
   @objc func imageTapped(_ sender: UITapGestureRecognizer) {
       if let viewController = parentViewController {
           if let navigation = viewController.navigationController{

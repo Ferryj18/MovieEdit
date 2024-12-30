@@ -18,6 +18,7 @@
 		4A2BC2802CBF947E00702C5D /* MovieListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BC27E2CBF947E00702C5D /* MovieListTests.swift */; };
 		4A2BC2842CBF948100702C5D /* MovieListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BC2812CBF948100702C5D /* MovieListUITests.swift */; };
 		4A2BC2852CBF948100702C5D /* MovieListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BC2822CBF948100702C5D /* MovieListUITestsLaunchTests.swift */; };
+		4A50BBBB2D14019E0057C91F /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50BBBA2D14019E0057C91F /* ApiManager.swift */; };
 		4A9EF5292D1000250005FA8A /* HomeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EF5282D1000250005FA8A /* HomeProtocol.swift */; };
 		4A9EF52B2D1000360005FA8A /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EF52A2D1000360005FA8A /* HomeInteractor.swift */; };
 		4A9EF52D2D10004A0005FA8A /* HomeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EF52C2D10004A0005FA8A /* HomeEntity.swift */; };
@@ -93,6 +94,7 @@
 		4A2BC27E2CBF947E00702C5D /* MovieListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTests.swift; sourceTree = "<group>"; };
 		4A2BC2812CBF948100702C5D /* MovieListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListUITests.swift; sourceTree = "<group>"; };
 		4A2BC2822CBF948100702C5D /* MovieListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4A50BBBA2D14019E0057C91F /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		4A9EF5282D1000250005FA8A /* HomeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocol.swift; sourceTree = "<group>"; };
 		4A9EF52A2D1000360005FA8A /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		4A9EF52C2D10004A0005FA8A /* HomeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntity.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				4A2BC25F2CBF947900702C5D /* NavigationBar.xib */,
 				4A2BC2602CBF947900702C5D /* SceneDelegate.swift */,
 				4A2BC2612CBF947900702C5D /* ViewController.swift */,
+				4A50BBBA2D14019E0057C91F /* ApiManager.swift */,
 			);
 			path = MovieList;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				4AD7843D2D108136000C745C /* DetailInteractor.swift in Sources */,
 				4A9EF5292D1000250005FA8A /* HomeProtocol.swift in Sources */,
 				4A2BC2722CBF947900702C5D /* NavigationBar.swift in Sources */,
+				4A50BBBB2D14019E0057C91F /* ApiManager.swift in Sources */,
 				4AD784412D108163000C745C /* DetailPresenter.swift in Sources */,
 				4AA8B4382CC79A4A00F0182B /* Date.swift in Sources */,
 				4A9EF52F2D10006B0005FA8A /* HomePresenter.swift in Sources */,

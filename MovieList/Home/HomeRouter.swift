@@ -29,13 +29,7 @@ class HomeRouter: PTRHomeProtocol {
         nav.pushViewController(vw, animated: true)
     }
     
-  func navToDetailFromCell(data: [Title], index: Int, nav: UINavigationController) {
-        print("Succes to Router")
-        let vw = DetailRouter.createDetailModule()
-        vw.dataAllMovie = data
-        vw.indexNumb = index
-        nav.pushViewController(vw, animated: true)
-    }
+
     
 //  enum Sections: Int {
 //    case TrendingMovies

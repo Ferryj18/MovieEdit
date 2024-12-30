@@ -14,18 +14,17 @@ class HomeMovieCollTVCell: UITableViewCell {
   
   @IBOutlet weak var clcAllMovie: UICollectionView!
   var presenter: VTPHomeProtocol?
-  var dataMovie: [Title] = []
+  var dataAllMovie: [Title] = []
   var parentViewController: UIViewController?
   var indexNumb: Int?
   var url: String?
   
   static let identifier = "HomeMovieCollTVCell"
-  //  weak var delegate: CollectionTableViewCellDelegate?
   static func nib() -> UINib{
     return UINib(nibName: "HomeMovieCollTVCell", bundle: nil)
   }
-  func configure(with dataMovie: [Title]) {
-    self.dataMovie = dataMovie
+  func configure(with dataAllMovie: [Title]) {
+    self.dataAllMovie = dataAllMovie
     DispatchQueue.main.async { [weak self] in
       self?.clcAllMovie.reloadData() // Make sure this is inside the closure
     }
@@ -39,22 +38,20 @@ class HomeMovieCollTVCell: UITableViewCell {
     
     func setSelected(_ selected: Bool, animated: Bool) {
       super.setSelected(selected, animated: animated)
-      
-      // Configure the view for the selected state
     }
     
   }
 }
-
+//
 extension HomeMovieCollTVCell:  UICollectionViewDelegate, UICollectionViewDataSource{
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataMovie.count
+    return dataAllMovie.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = clcAllMovie.dequeueReusableCell(withReuseIdentifier: HomeMovieCVCell.identifier, for: indexPath) as!HomeMovieCVCell
     
-    let title = dataMovie[indexPath.row] // Ambil data dari array dataTo
+    let title = dataAllMovie[indexPath.row] // Ambil data dari array dataTo
     cell.configure(with: title) // Berikan data ke cell
     
     return cell

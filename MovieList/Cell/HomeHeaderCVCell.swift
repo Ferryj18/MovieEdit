@@ -11,15 +11,27 @@ import SDWebImage
 class HomeHeaderCVCell: UICollectionViewCell {
 
   @IBOutlet weak var imgHeaderMovie: UIImageView!
-  var parentViewController: UIViewController?
+ 
+  
+  
+  
+  
   static let identifier = "HomeHeaderCVCell"
   static func nib() -> UINib{
     return UINib(nibName: "HomeHeaderCVCell", bundle: nil)
   }
+  var presenter: VTPHomeProtocol?
+  var dataMovie: [Title] = []
+   var parentViewController: UIViewController?
+   var indexNumb: Int?
+   var url: String?
+  
   
   override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+    imgHeaderMovie.layer.cornerRadius = 20
     }
   override var isSelected: Bool {
       didSet {
@@ -33,14 +45,19 @@ class HomeHeaderCVCell: UICollectionViewCell {
       }
   }
   func configure(with title: Title) {
-          // Set gambar untuk imageView menggunakan SDWebImage
-          if let posterPath = title.poster_path {
-              let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-            imgHeaderMovie.sd_setImage(with: url, completed: nil)
-          } else {
-            imgHeaderMovie.image = UIImage(named: "") // Placeholder jika poster tidak ada
-          }
+    if let posterPath = title.posterPath {
+      let imageUrlString = "https://image.tmdb.org/t/p/w500\(posterPath)"
+      print("Image URL: \(imageUrlString)")
+      let url = URL(string: imageUrlString)
+      imgHeaderMovie.sd_setImage(with: url) { (image, error, cacheType, url) in
+        if let error = error {
+          print("Error loading image: \(error.localizedDescription)")
+        } else {
+          print("Image loaded successfully from URL: \(url?.absoluteString ?? "")")
+        }
       }
+    }
+  }
   @objc func imageTapped(_ sender: UITapGestureRecognizer) {
       if let viewController = parentViewController {
           if let navigation = viewController.navigationController{
@@ -53,5 +70,4 @@ class HomeHeaderCVCell: UICollectionViewCell {
           }
       }
   }
-
 }

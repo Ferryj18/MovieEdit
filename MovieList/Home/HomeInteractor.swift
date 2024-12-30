@@ -6,79 +6,89 @@
 //
 
 import Foundation
-import UIKit
-import Alamofire
 import SwiftyJSON
-
-class HomeInteractor: PTIHomeProtocol {
-  
+import Alamofire
+class HomeInteractor: PTIHomeProtocol  {
   
   var presenter: ITPHomeProtocol?
   
-  func getMovieHeader(apiKey: String, completion: @escaping (Result<[Title], any Error>) -> Void) {
-    let apiUrl = "https://api.themoviedb.org/3/trending/movie/day"
+  func getTrendingMovies(key: String) {
+    let apiUrl = "\(Constants.baseURL)/3/trending/movie/day"
     let parameters: [String: Any] = [
-      "api_key": apiKey
+      "api_key": key
     ]
     
-    // Alamofire request with parameters
+    print("API URL: \(apiUrl)")
+    print("Parameters: \(parameters)")
+    
     AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
+      print("HTTP Status Code: \(response.response?.statusCode ?? 0)")
       switch response.result {
       case .success(let value):
-        let json = JSON(value) // Parse the response using SwiftyJSON
-        
-        // Parse the results from the "results" key
+        print("Response Data: \(value)")
+        let json = JSON(value)
         do {
-          let jsonData = try json["results"].rawData()
+          let movieResponse = try json["results"].rawData()
           let decoder = JSONDecoder()
-          let movies = try decoder.decode([Title].self, from: jsonData)
-          print("Parsed Movies: \(movies)")
-          // Return the parsed movies
-          completion(.success(movies))
+          let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
+          print("Parsed Movies: \(parsedMovies)")
+          self.presenter?.onSuccessGetTrendingMovies(data: parsedMovies)
         } catch {
-          // Handle the error in case of decoding failure
-          print("Decoding error: \(error)")
-          completion(.failure(error))
+          print("Decoding error: \(error.localizedDescription)")
+          let stringError = ErrorString.errorToString(error)
+          self.presenter?.onFailedGet(message: stringError)
         }
-        
       case .failure(let error):
-        // Handle the Alamofire error
-        print("Request error: \(error)")
-        completion(.failure(error))
+        print("AF Request Error: \(error.localizedDescription)")
+        let stringError = AFErrorToString.convertToString(error)
+        self.presenter?.onFailedGet(message: stringError)
       }
     }
   }
-    func getAllMovies(category: sections, completion: @escaping (Result<[Title], Error>) -> Void) {
-        // Construct the URL based on the category
-        guard let url = URL(string: "\(Constants.baseURL)/3/movie/\(category.rawValue)?api_key=\(Constants.API_KEY)&language=en-US&page=1") else {
-            return
+  func getAllMovies(key: String) {
+    let categories = ["upcoming", "popular", "top_rated"]
+    var results: [Title] = []
+    let group = DispatchGroup()
+    
+    for category in categories {
+      group.enter()
+      let apiUrl = "\(Constants.baseURL)/3/movie/\(category)"
+      let parameters: [String: Any] = [
+        "api_key": key,
+        "language": "en-US",
+        "page": 1
+      ]
+      
+      AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
+        switch response.result {
+        case .success(let value):
+          let json = JSON(value)
+          do {
+            let movieResponse = try json["results"].rawData()
+            let decoder = JSONDecoder()
+            let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
+            results.append(contentsOf: parsedMovies)
+          } catch {
+            print("Decoding error for \(category): \(error.localizedDescription)")
+          }
+          
+        case .failure(let error):
+          print("AF Request Error for \(category): \(error.localizedDescription)")
         }
-        
-        // Alamofire request with the constructed URL
-        AF.request(url).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                
-                // Parse the response using SwiftyJSON and decode the results
-                do {
-                    // Extract the 'results' key from the JSON and decode the array of Title objects
-                    let jsonData = try json["results"].rawData()
-                    let decoder = JSONDecoder()
-                    let movies = try decoder.decode([Title].self, from: jsonData)
-                    completion(.success(movies))  // Return the movies array
-                    
-                } catch {
-                    print("Error decoding response: \(error)")
-                    completion(.failure(error))  // Return any decoding errors
-                }
-                
-            case .failure(let error):
-                print("Error fetching data: \(error)")
-                completion(.failure(error))  // Return Alamofire request error
-            }
-        }
+        group.leave()
+      }
+    }
+    
+    group.notify(queue: .main) {
+      // Handle the results here
+      print("All Movies: \(results)")
+      
+      // Send results to the presenter
+      if let presenter = self.presenter {
+        presenter.onSuccessGetAllMovies(data: results)
+      } else {
+        print("Presenter not set. Process results here.")
+      }
     }
   }
-  
-
+}
