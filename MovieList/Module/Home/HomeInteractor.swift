@@ -22,7 +22,6 @@ class HomeInteractor: PTIHomeProtocol  {
     print("Parameters: \(parameters)")
     
     AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
-      print("HTTP Status Code: \(response.response?.statusCode ?? 0)")
       switch response.result {
       case .success(let value):
         print("Response Data: \(value)")
@@ -45,6 +44,8 @@ class HomeInteractor: PTIHomeProtocol  {
       }
     }
   }
+    
+    
   func getAllMovies(key: String) {
     let categories = ["upcoming", "popular", "top_rated"]
     var results: [Title] = []
@@ -74,6 +75,7 @@ class HomeInteractor: PTIHomeProtocol  {
           
         case .failure(let error):
           print("AF Request Error for \(category): \(error.localizedDescription)")
+            self.presenter?.onFailedGet(message: "\(error)")
         }
         group.leave()
       }

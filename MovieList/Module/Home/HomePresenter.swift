@@ -10,10 +10,6 @@ import UIKit
 import Foundation
 
 class HomePresenter: VTPHomeProtocol {
- 
- 
-  
-    
     //MARK: - Property HomePresenter
     var view: PTVHomeProtocol?
     var interactor: PTIHomeProtocol?

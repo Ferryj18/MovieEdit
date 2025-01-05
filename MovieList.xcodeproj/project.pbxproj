@@ -161,8 +161,7 @@
 		4A2BC2462CBF947900702C5D /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				4A9EF5602D1021A50005FA8A /* HomeMovieCollTVCell.swift */,
-				4A9EF5612D1021A50005FA8A /* HomeMovieCollTVCell.xib */,
+				CB9CE92B2D2AD0BC00BAD717 /* HomeMenuCVC */,
 				4A9EF5642D1023740005FA8A /* HomeMovieCVCell.swift */,
 				4A9EF5652D1023740005FA8A /* HomeMovieCVCell.xib */,
 				4A9EF5682D1024B40005FA8A /* HomeHeaderCVCell.swift */,
@@ -188,13 +187,13 @@
 		4A2BC2562CBF947900702C5D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				4A9EF5282D1000250005FA8A /* HomeProtocol.swift */,
-				4A9EF52A2D1000360005FA8A /* HomeInteractor.swift */,
-				4A9EF52C2D10004A0005FA8A /* HomeEntity.swift */,
-				4A9EF52E2D10006B0005FA8A /* HomePresenter.swift */,
-				4A9EF5302D1002820005FA8A /* HomeVC.swift */,
 				4A9EF5312D1002820005FA8A /* HomeVC.xib */,
+				4A9EF5302D1002820005FA8A /* HomeVC.swift */,
+				4A9EF52A2D1000360005FA8A /* HomeInteractor.swift */,
+				4A9EF52E2D10006B0005FA8A /* HomePresenter.swift */,
+				4A9EF52C2D10004A0005FA8A /* HomeEntity.swift */,
 				4AD784422D108196000C745C /* HomeRouter.swift */,
+				4A9EF5282D1000250005FA8A /* HomeProtocol.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -202,19 +201,10 @@
 		4A2BC2622CBF947900702C5D /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				CB9CE8D32D2ACAE100BAD717 /* Assets */,
+				CB9CE8D12D2ACABD00BAD717 /* Component */,
 				4A8FBC462CC7A36E00AE7537 /* Common */,
-				4A2BC2462CBF947900702C5D /* Cell */,
-				4A2BC24E2CBF947900702C5D /* Detail */,
-				4A2BC2562CBF947900702C5D /* Home */,
-				4A2BC2572CBF947900702C5D /* AppDelegate.swift */,
-				4A2BC2582CBF947900702C5D /* Assets.xcassets */,
-				4A2BC2592CBF947900702C5D /* Info.plist */,
-				4A2BC25B2CBF947900702C5D /* LaunchScreen.storyboard */,
-				4A2BC25D2CBF947900702C5D /* Main.storyboard */,
-				4A2BC25E2CBF947900702C5D /* NavigationBar.swift */,
-				4A2BC25F2CBF947900702C5D /* NavigationBar.xib */,
-				4A2BC2602CBF947900702C5D /* SceneDelegate.swift */,
-				4A2BC2612CBF947900702C5D /* ViewController.swift */,
+				CB9CE8D22D2ACACF00BAD717 /* Module */,
 				4A50BBBA2D14019E0057C91F /* ApiManager.swift */,
 			);
 			path = MovieList;
@@ -250,6 +240,7 @@
 		4A8FBC462CC7A36E00AE7537 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CB9CE8D42D2ACB0500BAD717 /* NavigationBar */,
 				4AA8B43D2CC79C9D00F0182B /* Error.swift */,
 				4AA8B43B2CC79C9100F0182B /* Alert.swift */,
 				4AA8B4392CC79BB400F0182B /* LoadingIndicator.swift */,
@@ -278,6 +269,55 @@
 				4AB603072CBC35300098F61A /* MovieListUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CB9CE8D12D2ACABD00BAD717 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BC2462CBF947900702C5D /* Cell */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		CB9CE8D22D2ACACF00BAD717 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BC2562CBF947900702C5D /* Home */,
+				4A2BC24E2CBF947900702C5D /* Detail */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		CB9CE8D32D2ACAE100BAD717 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BC2592CBF947900702C5D /* Info.plist */,
+				4A2BC2572CBF947900702C5D /* AppDelegate.swift */,
+				4A2BC2602CBF947900702C5D /* SceneDelegate.swift */,
+				4A2BC2582CBF947900702C5D /* Assets.xcassets */,
+				4A2BC25B2CBF947900702C5D /* LaunchScreen.storyboard */,
+				4A2BC25D2CBF947900702C5D /* Main.storyboard */,
+				4A2BC2612CBF947900702C5D /* ViewController.swift */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		CB9CE8D42D2ACB0500BAD717 /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BC25E2CBF947900702C5D /* NavigationBar.swift */,
+				4A2BC25F2CBF947900702C5D /* NavigationBar.xib */,
+			);
+			path = NavigationBar;
+			sourceTree = "<group>";
+		};
+		CB9CE92B2D2AD0BC00BAD717 /* HomeMenuCVC */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EF5602D1021A50005FA8A /* HomeMovieCollTVCell.swift */,
+				4A9EF5612D1021A50005FA8A /* HomeMovieCollTVCell.xib */,
+			);
+			path = HomeMenuCVC;
 			sourceTree = "<group>";
 		};
 		FF72BB00987E23DBB7081605 /* Pods */ = {
@@ -626,10 +666,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TG5V34PW77;
+				DEVELOPMENT_TEAM = NPQ6B3HGC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieList/Info.plist;
+				INFOPLIST_FILE = MovieList/Assets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MovieList;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -657,10 +698,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TG5V34PW77;
+				DEVELOPMENT_TEAM = NPQ6B3HGC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieList/Info.plist;
+				INFOPLIST_FILE = MovieList/Assets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MovieList;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -732,6 +774,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Assets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -789,6 +832,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Assets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
