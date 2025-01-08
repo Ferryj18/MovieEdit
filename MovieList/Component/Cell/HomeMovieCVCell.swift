@@ -15,7 +15,7 @@ class HomeMovieCVCell: UICollectionViewCell {
   var parentViewController: UIViewController?
   var presenter: VTPHomeProtocol?
   static let identifier = "HomeMovieCVCell"
-  var dataAllMovie: [Title] = []
+  var dataToPopular: [Title] = []
   var tapGesture : UITapGestureRecognizer!
   var url: String?
   static func nib() -> UINib{
@@ -27,6 +27,7 @@ class HomeMovieCVCell: UICollectionViewCell {
       let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
       imgAllMovie.isUserInteractionEnabled = true
       imgAllMovie.addGestureRecognizer(tapGesture)
+      
     }
   override var isSelected: Bool {
       didSet {

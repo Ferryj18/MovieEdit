@@ -25,7 +25,6 @@ class HomeRouter: PTRHomeProtocol {
   func navToDetail(data: [Title], nav: UINavigationController) {
         let vw = DetailRouter.createDetailModule()
     vw.dataMovie = data
-    vw.sections = .TrendingMovies
         nav.pushViewController(vw, animated: true)
     }
     

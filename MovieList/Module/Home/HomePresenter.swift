@@ -10,6 +10,8 @@ import UIKit
 import Foundation
 
 class HomePresenter: VTPHomeProtocol {
+ 
+  
     //MARK: - Property HomePresenter
     var view: PTVHomeProtocol?
     var interactor: PTIHomeProtocol?
@@ -29,9 +31,15 @@ class HomePresenter: VTPHomeProtocol {
         interactor?.getTrendingMovies(key: key)
     }
     
-    func getAllMovies(key: String) {
-        interactor?.getAllMovies(key: key)
-    }
+  func getPopularMovies(key: String) {
+    interactor?.getPopularMovies(key: key)
+  }
+  func getUpcomingMovies(key: String) {
+      interactor?.getUpcomingMovies(key: key)
+  }
+  func getTopRatedMovies(key: String) {
+      interactor?.getTopRatedMovies(key: key)
+  }
     
     func startNavToDetail(data: [Title], nav: UINavigationController) {
         router?.navToDetail(data: data, nav: nav)
@@ -42,13 +50,22 @@ class HomePresenter: VTPHomeProtocol {
 
     //MARK: - Extension HomePresenter
 extension  HomePresenter : ITPHomeProtocol {
+  func onSuccessGetPopularMovies(data: [Title]) {
+    view?.successGetPopularMovies(data: data)
+  }
+  
+  func onSuccessGetUpcomingMovies(data: [Title]) {
+    view?.successGetUpcomingMovies(data: data)
+  }
+  
+  func onSuccessGetTopRatedMovies(data: [Title]) {
+    view?.successGetTopRatedMovies(data: data)
+  }
+  
   func onSuccessGetTrendingMovies(data: [Title]) {
     view?.successGetTrendingMovies(data: data)
   }
   
-  func onSuccessGetAllMovies(data: [Title]) {
-    view?.successGetAllMovies(data: data)
-  }
   
   
     func onFailedGet(message: String) {

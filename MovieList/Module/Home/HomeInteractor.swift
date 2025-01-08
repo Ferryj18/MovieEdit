@@ -8,9 +8,23 @@
 import Foundation
 import SwiftyJSON
 import Alamofire
+
 class HomeInteractor: PTIHomeProtocol  {
   
+  
   var presenter: ITPHomeProtocol?
+  
+  struct Constants {
+    static let API_KEY = "883b20661c35f38e181243f7361f28f3"
+    static let baseURL = "https://api.themoviedb.org"
+    static let YoutubeAPI_KEY = "AIzaSyDuHzNcNJM5q8plEkXx681SwPXN_530YK4"
+    static let YoutubeBaseURL = "https://youtube.googleapis.com/youtube/v3/search?"
+  }
+  enum MovieCategory: String {
+    case popular = "popular"
+    case upcoming = "upcoming"
+    case topRated = "top_rated"
+  }
   
   func getTrendingMovies(key: String) {
     let apiUrl = "\(Constants.baseURL)/3/trending/movie/day"
@@ -18,8 +32,8 @@ class HomeInteractor: PTIHomeProtocol  {
       "api_key": key
     ]
     
-    print("API URL: \(apiUrl)")
-    print("Parameters: \(parameters)")
+    //    print("API URL: \(apiUrl)")
+    //    print("Parameters: \(parameters)")
     
     AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
       switch response.result {
@@ -44,53 +58,119 @@ class HomeInteractor: PTIHomeProtocol  {
       }
     }
   }
-    
-    
-  func getAllMovies(key: String) {
-    let categories = ["upcoming", "popular", "top_rated"]
-    var results: [Title] = []
-    let group = DispatchGroup()
-    
-    for category in categories {
-      group.enter()
-      let apiUrl = "\(Constants.baseURL)/3/movie/\(category)"
+   
+    func getPopularMovies(key: String) {
+      let apiUrl = "\(Constants.baseURL)/3/movie/popular"
       let parameters: [String: Any] = [
-        "api_key": key,
-        "language": "en-US",
-        "page": 1
+        "api_key": key
       ]
+      
+      //    print("API URL: \(apiUrl)")
+      //    print("Parameters: \(parameters)")
       
       AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
         switch response.result {
         case .success(let value):
+          print("Response Data: \(value)")
           let json = JSON(value)
           do {
             let movieResponse = try json["results"].rawData()
             let decoder = JSONDecoder()
             let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
-            results.append(contentsOf: parsedMovies)
+            print("Parsed Movies: \(parsedMovies)")
+            self.presenter?.onSuccessGetPopularMovies(data: parsedMovies)
           } catch {
-            print("Decoding error for \(category): \(error.localizedDescription)")
+            print("Decoding error: \(error.localizedDescription)")
+            let stringError = ErrorString.errorToString(error)
+            self.presenter?.onFailedGet(message: stringError)
           }
-          
         case .failure(let error):
-          print("AF Request Error for \(category): \(error.localizedDescription)")
-            self.presenter?.onFailedGet(message: "\(error)")
+          print("AF Request Error: \(error.localizedDescription)")
+          let stringError = AFErrorToString.convertToString(error)
+          self.presenter?.onFailedGet(message: stringError)
         }
-        group.leave()
+      }
+    }
+    func getUpcomingMovies(key: String) {
+      let apiUrl = "\(Constants.baseURL)/3/movie/upcoming"
+      let parameters: [String: Any] = [
+        "api_key": key
+      ]
+      
+      //    print("API URL: \(apiUrl)")
+      //    print("Parameters: \(parameters)")
+      
+      AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
+        switch response.result {
+        case .success(let value):
+          print("Response Data: \(value)")
+          let json = JSON(value)
+          do {
+            let movieResponse = try json["results"].rawData()
+            let decoder = JSONDecoder()
+            let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
+            print("Parsed Movies: \(parsedMovies)")
+            self.presenter?.onSuccessGetUpcomingMovies(data: parsedMovies)
+          } catch {
+            print("Decoding error: \(error.localizedDescription)")
+            let stringError = ErrorString.errorToString(error)
+            self.presenter?.onFailedGet(message: stringError)
+          }
+        case .failure(let error):
+          print("AF Request Error: \(error.localizedDescription)")
+          let stringError = AFErrorToString.convertToString(error)
+          self.presenter?.onFailedGet(message: stringError)
+        }
       }
     }
     
-    group.notify(queue: .main) {
-      // Handle the results here
-      print("All Movies: \(results)")
+    func getTopRatedMovies(key: String) {
+      let apiUrl = "\(Constants.baseURL)/3/movie/top_rated"
+      let parameters: [String: Any] = [
+        "api_key": key
+      ]
       
-      // Send results to the presenter
-      if let presenter = self.presenter {
-        presenter.onSuccessGetAllMovies(data: results)
-      } else {
-        print("Presenter not set. Process results here.")
+      //    print("API URL: \(apiUrl)")
+      //    print("Parameters: \(parameters)")
+      
+      AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
+        switch response.result {
+        case .success(let value):
+          print("Response Data: \(value)")
+          let json = JSON(value)
+          do {
+            let movieResponse = try json["results"].rawData()
+            let decoder = JSONDecoder()
+            let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
+            print("Parsed Movies: \(parsedMovies)")
+            self.presenter?.onSuccessGetTopRatedMovies(data: parsedMovies)
+          } catch {
+            print("Decoding error: \(error.localizedDescription)")
+            let stringError = ErrorString.errorToString(error)
+            self.presenter?.onFailedGet(message: stringError)
+          }
+        case .failure(let error):
+          print("AF Request Error: \(error.localizedDescription)")
+          let stringError = AFErrorToString.convertToString(error)
+          self.presenter?.onFailedGet(message: stringError)
+        }
       }
+      
     }
   }
-}
+//  func getTrendingMovies() {
+//      APICaller.shared.getTrendingMovies { [weak self] result in
+//          switch result {
+//          case .success(let titles):
+//              print("Received Titles: \(titles)")
+//              self?.presenter?.onSuccessGetTrendingMovies(data: titles) // Pass data to Presenter
+//          case .failure(let error):
+//              print("Error: \(error.localizedDescription)")
+//              self?.presenter?.onFailedGet(message: error.localizedDescription)
+//          }
+//      }
+//  }
+//
+//    }
+  
+

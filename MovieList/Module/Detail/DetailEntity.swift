@@ -7,9 +7,7 @@
 
 import Foundation
 
-enum sections: Int {
-  case TrendingMovies = 0
-  case Popular = 1
-  case Upcoming = 2
-  case TopRated = 3
+enum navFrom{
+    case TrendingMovie
+    case AllMovie
 }

@@ -18,35 +18,60 @@ class DetailVC: UIViewController {
   @IBOutlet weak var lblOverview: UILabel!
   
   var presenter: VTPDetailProtocol?
+  private var viewModel: TitlePreviewViewModel?
   var dataMovie: [Title] = []
   var dataAllMovie: [Title] = []
-  var sections : sections = .TrendingMovies
+//  var sections : sections = .TrendingMovies
   var indexNumb: Int = 0
   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+      setUpView()
+           setUpAction()
+           setUpData()
         // Do any additional setup after loading the view.
     }
-  public func configure(with model: TitlePreviewViewModel) {
-    lblTitle.text = model.title
-    lblOverview.text = model.titleOverview
-      
-      guard let url = URL(string: "https://www.youtube.com/embed/\(model.youtubeView.id.videoId)") else {
-          return
-      }
-      
-    wkMovie.load(URLRequest(url: url))
+  
+  func setUpView(){
+    
   }
+  func setUpAction(){
+    
+  }
+  func setUpData(){
+    
+  }
+  
+  // Method to set up the view model
+        public func configure(with model: TitlePreviewViewModel) {
+            self.viewModel = model
+        }
+  
+  // Update the UI elements
+        private func configureUI() {
+            guard let viewModel = viewModel else {
+                print("ViewModel is nil")
+                return
+            }
 
-    /*
-    // MARK: - Navigation
+            // Set text for labels
+            lblTitle.text = viewModel.title
+            lblOverview.text = viewModel.titleOverview
+            
+            // Safely load YouTube video
+            if let videoId = viewModel.youtubeView.id.videoId {
+                let urlString = "https://www.youtube.com/embed/\(videoId)"
+                if let url = URL(string: urlString) {
+                    let request = URLRequest(url: url)
+                  wkMovie.load(request)
+                } else {
+                    print("Invalid YouTube URL: \(urlString)")
+                }
+            } else {
+                print("Invalid video ID")
+            }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            // Optional: Enable developer extras for debugging
+          wkMovie.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        }
     }
-    */
-
-}

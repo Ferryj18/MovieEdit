@@ -31,6 +31,8 @@ class HomeHeaderCVCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+    imgHeaderMovie.isUserInteractionEnabled = true
+    imgHeaderMovie.addGestureRecognizer(tapGesture)
     imgHeaderMovie.layer.cornerRadius = 20
     }
   override var isSelected: Bool {
@@ -61,11 +63,10 @@ class HomeHeaderCVCell: UICollectionViewCell {
   @objc func imageTapped(_ sender: UITapGestureRecognizer) {
       if let viewController = parentViewController {
           if let navigation = viewController.navigationController{
-//                let vw = DetailNewsRouter.createDetailNewsModule()
-//                vw.dataAllNews = dataTo
+                let vw = DetailRouter.createDetailModule()
+            vw.dataMovie = dataMovie
 //                vw.indexNumb = indexNumb ?? 0
 //                vw.navFrom = .AllHeadline
-              let vw = DetailRouter.createDetailModule()
               navigation.pushViewController(vw, animated: true)
           }
       }

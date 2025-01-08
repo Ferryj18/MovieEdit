@@ -14,7 +14,9 @@ class HomeMovieCollTVCell: UITableViewCell {
   
   @IBOutlet weak var clcAllMovie: UICollectionView!
   var presenter: VTPHomeProtocol?
-  var dataAllMovie: [Title] = []
+  var dataToPopular: [Title] = []
+  var dataUpcoming : [Title] = []
+  var dataTopRated : [Title] = []
   var parentViewController: UIViewController?
   var indexNumb: Int?
   var url: String?
@@ -24,36 +26,36 @@ class HomeMovieCollTVCell: UITableViewCell {
     return UINib(nibName: "HomeMovieCollTVCell", bundle: nil)
   }
   func configure(with dataAllMovie: [Title]) {
-    self.dataAllMovie = dataAllMovie
-    DispatchQueue.main.async { [weak self] in
-      self?.clcAllMovie.reloadData() // Make sure this is inside the closure
+    self.dataToPopular = dataAllMovie
+    clcAllMovie.reloadData()
     }
-    func awakeFromNib() {
+  override func awakeFromNib() {
       super.awakeFromNib()
       // Initialization code
       clcAllMovie.register(HomeMovieCVCell.nib(), forCellWithReuseIdentifier: HomeMovieCVCell.identifier)
       clcAllMovie.delegate = self
       clcAllMovie.dataSource = self
+    clcAllMovie.backgroundColor = .black
     }
     
-    func setSelected(_ selected: Bool, animated: Bool) {
+  override func setSelected(_ selected: Bool, animated: Bool) {
       super.setSelected(selected, animated: animated)
     }
     
   }
-}
 //
-extension HomeMovieCollTVCell:  UICollectionViewDelegate, UICollectionViewDataSource{
+extension HomeMovieCollTVCell:  UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataAllMovie.count
+    return dataToPopular.count
   }
-  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = clcAllMovie.dequeueReusableCell(withReuseIdentifier: HomeMovieCVCell.identifier, for: indexPath) as!HomeMovieCVCell
+    // Dequeue the cell
+    let cell = clcAllMovie.dequeueReusableCell(withReuseIdentifier: HomeMovieCVCell.identifier, for: indexPath) as! HomeMovieCVCell
     
-    let title = dataAllMovie[indexPath.row] // Ambil data dari array dataTo
-    cell.configure(with: title) // Berikan data ke cell
+    // Configure the cell with the movie data
+    cell.configure(with: dataToPopular[indexPath.row])
     
+    // Return the properly configured cell
     return cell
   }
 }
