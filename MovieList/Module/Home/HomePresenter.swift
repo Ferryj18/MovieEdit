@@ -10,6 +10,13 @@ import UIKit
 import Foundation
 
 class HomePresenter: VTPHomeProtocol {
+  func getMovies(key: String) {
+    interactor?.getMovies(key: key)
+  }
+  
+  
+  
+  
  
   
     //MARK: - Property HomePresenter
@@ -30,16 +37,8 @@ class HomePresenter: VTPHomeProtocol {
   func getTrendingMovies(key: String){
         interactor?.getTrendingMovies(key: key)
     }
-    
-  func getPopularMovies(key: String) {
-    interactor?.getPopularMovies(key: key)
-  }
-  func getUpcomingMovies(key: String) {
-      interactor?.getUpcomingMovies(key: key)
-  }
-  func getTopRatedMovies(key: String) {
-      interactor?.getTopRatedMovies(key: key)
-  }
+  
+
     
     func startNavToDetail(data: [Title], nav: UINavigationController) {
         router?.navToDetail(data: data, nav: nav)
@@ -50,17 +49,12 @@ class HomePresenter: VTPHomeProtocol {
 
     //MARK: - Extension HomePresenter
 extension  HomePresenter : ITPHomeProtocol {
-  func onSuccessGetPopularMovies(data: [Title]) {
-    view?.successGetPopularMovies(data: data)
-  }
   
-  func onSuccessGetUpcomingMovies(data: [Title]) {
-    view?.successGetUpcomingMovies(data: data)
+  func onSuccessGetMovies(data: [Title], movieType: MovieType) {
+      // Call a unified method in the view
+      view?.successGetMovies(data: data, movieType: movieType)
   }
-  
-  func onSuccessGetTopRatedMovies(data: [Title]) {
-    view?.successGetTopRatedMovies(data: data)
-  }
+
   
   func onSuccessGetTrendingMovies(data: [Title]) {
     view?.successGetTrendingMovies(data: data)

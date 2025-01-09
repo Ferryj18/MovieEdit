@@ -18,10 +18,8 @@ class HomeVC: UIViewController{
   var dataTopRated : [Title] = []
   var dataUpcoming : [Title] = []
   var dataPopular : [Title] = []
+//  var endpoints: [MovieType] = [.popular, .upcoming, .topRated]
     var key = "883b20661c35f38e181243f7361f28f3"
-    //  var indexNumb: Int?
-    
-    var rowCount: Int? = 0
     let sectionHeaders = ["Popular","Upcoming","Top Rated"]
     
     override func viewDidLoad() {
@@ -47,32 +45,31 @@ class HomeVC: UIViewController{
     }
     
     func setUpData(){
-      presenter?.getTopRatedMovies(key: key)
-      presenter?.getUpcomingMovies(key: key)
-      presenter?.getPopularMovies(key: key)
-        presenter?.getTrendingMovies(key: key)
+    presenter?.getTrendingMovies(key: key)
+      presenter?.getMovies(key: key)
+    
     }
     
     
 }
 extension HomeVC: PTVHomeProtocol{
-  func successGetPopularMovies(data: [Title]) {
-    dataPopular = data
-    print("Data Popular Count: \(dataPopular.count)")
-    tblMovie.reloadData()
+  func successGetMovies(data: [Title], movieType: MovieType) {
+      switch movieType {
+      case .popular:
+          dataPopular = data
+          print("Data Popular Count: \(dataPopular.count)")
+      case .upcoming:
+          dataUpcoming = data
+          print("Data Upcoming Count: \(dataUpcoming.count)")
+      case .top_rated:
+          dataTopRated = data
+          print("Data TopRated Count: \(dataTopRated.count)")
+      }
+      
+      // Reload the table view after updating the data
+      tblMovie.reloadData()
   }
-  
-  func successGetUpcomingMovies(data: [Title]) {
-    dataUpcoming = data
-    print("Data Upcoming Count: \(dataUpcoming.count)")
-    tblMovie.reloadData()
-  }
-  
-  func successGetTopRatedMovies(data: [Title]) {
-    dataTopRated = data
-    print("Data TopRated Count: \(dataTopRated.count)")
-    tblMovie.reloadData()
-  }
+
   
   func successGetTrendingMovies(data: [Title]) {
     dataMovie = data

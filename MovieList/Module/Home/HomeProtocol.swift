@@ -12,9 +12,7 @@ protocol VTPHomeProtocol: AnyObject {
     var router: PTRHomeProtocol? { get set }
     
   func getTrendingMovies(key: String)
-  func getPopularMovies(key: String)
-  func getUpcomingMovies(key: String)
-  func getTopRatedMovies(key: String)
+  func getMovies(key: String)
   func startNavToDetail(data: [Title], nav: UINavigationController)
 
     
@@ -24,16 +22,13 @@ protocol PTIHomeProtocol: AnyObject {
     var presenter: ITPHomeProtocol? { get set }
     
   func getTrendingMovies(key: String)
-  func getPopularMovies(key: String)
-  func getUpcomingMovies(key: String)
-  func getTopRatedMovies(key: String)
+  func getMovies(key: String)
 }
 
 protocol ITPHomeProtocol: AnyObject {
     func onSuccessGetTrendingMovies(data: [Title])
-  func onSuccessGetPopularMovies(data: [Title])
-  func onSuccessGetUpcomingMovies(data: [Title])
-  func onSuccessGetTopRatedMovies(data: [Title])
+  func onSuccessGetMovies(data: [Title], movieType: MovieType)
+
     func onFailedGet(message: String)
 }
 
@@ -41,9 +36,8 @@ protocol ITPHomeProtocol: AnyObject {
 
 protocol PTVHomeProtocol: AnyObject {
   func successGetTrendingMovies (data: [Title])
- func successGetPopularMovies(data: [Title])
-  func successGetUpcomingMovies(data: [Title])
-  func successGetTopRatedMovies(data: [Title])
+  func successGetMovies(data: [Title], movieType: MovieType)
+
     func failedGet(message: String)
 }
 

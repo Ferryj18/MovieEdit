@@ -58,64 +58,59 @@ class HomeInteractor: PTIHomeProtocol  {
       }
     }
   }
-  func getMovies(endpoint: String, key: String) {
-    let apiUrl = "\(Constants.baseURL)/3/movie/\(endpoint)"
-    let parameters: [String: Any] = [
-      "api_key": key
-    ]
-    
-    // Uncomment for debugging
-    // print("API URL: \(apiUrl)")
-    // print("Parameters: \(parameters)")
-    
-    AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
-      switch response.result {
-      case .success(let value):
-        print("Response Data: \(value)")
-        let json = JSON(value)
-        do {
-          let movieResponse = try json["results"].rawData()
-          let decoder = JSONDecoder()
-          let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
-          print("Parsed Movies: \(parsedMovies)")
-          
-          // Call the appropriate presenter method based on the endpoint
-          switch endpoint {
-          case "popular":
-            self.presenter?.onSuccessGetPopularMovies(data: parsedMovies)
-          case "upcoming":
-            self.presenter?.onSuccessGetUpcomingMovies(data: parsedMovies)
-          case "top_rated":
-            self.presenter?.onSuccessGetTopRatedMovies(data: parsedMovies)
-          default:
-            print("Unknown endpoint")
-          }
-        } catch {
-          print("Decoding error: \(error.localizedDescription)")
-          let stringError = ErrorString.errorToString(error)
-          self.presenter?.onFailedGet(message: stringError)
+   func getMovies(endpoint: String, key: String) {
+        let apiUrl = "\(Constants.baseURL)/3/movie/\(endpoint)"
+        let parameters: [String: Any] = [
+            "api_key": key
+        ]
+        
+        AF.request(apiUrl, method: .get, parameters: parameters).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                do {
+                    let movieResponse = try json["results"].rawData()
+                    let decoder = JSONDecoder()
+                    let parsedMovies = try decoder.decode([Title].self, from: movieResponse)
+                    
+                    // Use the enum to determine the movie type
+                    if let movieType = MovieType(rawValue: endpoint) {
+                        self.presenter?.onSuccessGetMovies(data: parsedMovies, movieType: movieType)
+                    } else {
+                        print("Unknown endpoint")
+                    }
+                } catch {
+                    let stringError = ErrorString.errorToString(error)
+                    self.presenter?.onFailedGet(message: stringError)
+                }
+            case .failure(let error):
+                let stringError = AFErrorToString.convertToString(error)
+                self.presenter?.onFailedGet(message: stringError)
+            }
         }
-      case .failure(let error):
-        print("AF Request Error: \(error.localizedDescription)")
-        let stringError = AFErrorToString.convertToString(error)
-        self.presenter?.onFailedGet(message: stringError)
-      }
     }
-  }
+  // This function fetches movies for multiple endpoints
+     func getMovies(key: String) {
+         let endpoints: [MovieType] = [.popular, .upcoming, .top_rated]
+         for endpoint in endpoints {
+             getMovies(endpoint: endpoint.rawValue, key: key)
+         }
+     }
+ }
   
-  // Usage examples
-  func getPopularMovies(key: String) {
-    getMovies(endpoint: "popular", key: key)
-  }
-  
-  func getUpcomingMovies(key: String) {
-    getMovies(endpoint: "upcoming", key: key)
-  }
-  
-  func getTopRatedMovies(key: String) {
-    getMovies(endpoint: "top_rated", key: key)
-  }
-}
+//  // Usage examples
+//  func getPopularMovies(key: String) {
+//    getMovies(endpoint: "popular", key: key)
+//  }
+//  
+//  func getUpcomingMovies(key: String) {
+//    getMovies(endpoint: "upcoming", key: key)
+//  }
+//  
+//  func getTopRatedMovies(key: String) {
+//    getMovies(endpoint: "top_rated", key: key)
+//  }
+//}
    
 //    func getPopularMovies(key: String) {
 //      let apiUrl = "\(Constants.baseURL)/3/movie/popular"
