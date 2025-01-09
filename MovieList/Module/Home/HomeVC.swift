@@ -15,10 +15,10 @@ class HomeVC: UIViewController{
     
     var presenter: VTPHomeProtocol?
     var dataMovie : [Title] = []
-  var dataTopRated : [Title] = []
-  var dataUpcoming : [Title] = []
-  var dataPopular : [Title] = []
-//  var endpoints: [MovieType] = [.popular, .upcoming, .topRated]
+    var dataTopRated : [Title] = []
+    var dataUpcoming : [Title] = []
+    var dataPopular : [Title] = []
+    //  var endpoints: [MovieType] = [.popular, .upcoming, .topRated]
     var key = "883b20661c35f38e181243f7361f28f3"
     let sectionHeaders = ["Popular","Upcoming","Top Rated"]
     
@@ -35,48 +35,48 @@ class HomeVC: UIViewController{
         clcHeader.register(HomeHeaderCVCell.nib(), forCellWithReuseIdentifier: HomeHeaderCVCell.identifier)
         clcHeader.delegate = self
         clcHeader.dataSource = self
-      clcHeader.backgroundColor = .black
-          clcHeader.isPagingEnabled = true // Enable paging
+        clcHeader.backgroundColor = .black
+        clcHeader.isPagingEnabled = true // Enable paging
         tblMovie.register(HomeMovieCollTVCell.nib(), forCellReuseIdentifier: HomeMovieCollTVCell.identifier)
         tblMovie.delegate = self
         tblMovie.dataSource = self
-      tblMovie.backgroundColor = .black
+        tblMovie.backgroundColor = .black
         
     }
     
     func setUpData(){
-    presenter?.getTrendingMovies(key: key)
-      presenter?.getMovies(key: key)
-    
+        presenter?.getTrendingMovies(key: key)
+        presenter?.getMovies(key: key)
+        
     }
     
     
 }
 extension HomeVC: PTVHomeProtocol{
-  func successGetMovies(data: [Title], movieType: MovieType) {
-      switch movieType {
-      case .popular:
-          dataPopular = data
-          print("Data Popular Count: \(dataPopular.count)")
-      case .upcoming:
-          dataUpcoming = data
-          print("Data Upcoming Count: \(dataUpcoming.count)")
-      case .top_rated:
-          dataTopRated = data
-          print("Data TopRated Count: \(dataTopRated.count)")
-      }
-      
-      // Reload the table view after updating the data
-      tblMovie.reloadData()
-  }
-
-  
-  func successGetTrendingMovies(data: [Title]) {
-    dataMovie = data
-    print("Data Movie Count: \(dataMovie.count)")
-    clcHeader.reloadData()
+    func successGetMovies(data: [Title], movieType: MovieType) {
+        switch movieType {
+        case .popular:
+            dataPopular = data
+            print("Data Popular Count: \(dataPopular.count)")
+        case .upcoming:
+            dataUpcoming = data
+            print("Data Upcoming Count: \(dataUpcoming.count)")
+        case .top_rated:
+            dataTopRated = data
+            print("Data TopRated Count: \(dataTopRated.count)")
+        }
+        
+        // Reload the table view after updating the data
+        tblMovie.reloadData()
+    }
     
-  }
+    
+    func successGetTrendingMovies(data: [Title]) {
+        dataMovie = data
+        print("Data Movie Count: \(dataMovie.count)")
+        clcHeader.reloadData()
+        
+    }
     
     func failedGet(message: String) {
         print(message)
@@ -88,31 +88,39 @@ extension HomeVC: PTVHomeProtocol{
 }
 // header trending
 extension HomeVC : UICollectionViewDelegate, UICollectionViewDataSource{
-  
-  func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1 // Only one section for horizontal scroll
-  }
-  
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    print("Data Movie Count: \(dataMovie.count)")
-    return dataMovie.count
     
-  }
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: clcHeader.frame.width, height: clcHeader.frame.height)
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHeaderCVCell", for: indexPath) as? HomeHeaderCVCell else {
-      return UICollectionViewCell()
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1 // Only one section for horizontal scroll
     }
-    // Configure the cell with data
-    let movie = dataMovie[indexPath.row] // Assuming dataTo holds your movie data
-    cell.configure(with: movie)
     
-    return cell
-  }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //    print("Data Movie Count: \(dataMovie.count)")
+        return dataMovie.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: clcHeader.frame.width, height: clcHeader.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let navigation = navigationController {
+            self.presenter?.startNavToDetail(data: dataMovie, index: indexPath.item, nav: navigation)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHeaderCVCell", for: indexPath) as? HomeHeaderCVCell else {
+            return UICollectionViewCell()
+        }
+        // Configure the cell with data
+        let movie = dataMovie[indexPath.row] // Assuming dataTo holds your movie data
+        cell.configure(with: movie)
+        
+        return cell
+        
+    }
+    
+    
 }
 // All Movies table
 extension HomeVC : UITableViewDelegate, UITableViewDataSource{
@@ -122,27 +130,27 @@ extension HomeVC : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-  
-
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeMovieCollTVCell.identifier, for: indexPath) as? HomeMovieCollTVCell else {
-          return UITableViewCell()
-      }
-      
-      switch indexPath.section {
-      case 0: // Popular
-          cell.configure(with: dataPopular)
-      case 1: // Upcoming
-          cell.configure(with: dataUpcoming)
-      case 2: // Top Rated
-          cell.configure(with: dataTopRated)
-      default:
-          break
-      }
-      
-      return cell
-  }
-
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeMovieCollTVCell.identifier, for: indexPath) as? HomeMovieCollTVCell else {
+            return UITableViewCell()
+        }
+        
+        switch indexPath.section {
+        case 0: // Popular
+            cell.configure(with: dataPopular)
+        case 1: // Upcoming
+            cell.configure(with: dataUpcoming)
+        case 2: // Top Rated
+            cell.configure(with: dataTopRated)
+        default:
+            break
+        }
+        
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         let label = UILabel()
@@ -171,7 +179,7 @@ extension HomeVC : UITableViewDelegate, UITableViewDataSource{
         
         return headerView
     }
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 250.0
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 250.0
     }
 }

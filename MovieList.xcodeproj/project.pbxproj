@@ -173,13 +173,13 @@
 		4A2BC24E2CBF947900702C5D /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				4AD784342D107D29000C745C /* DetailVC.swift */,
 				4AD784352D107D29000C745C /* DetailVC.xib */,
-				4AD7843A2D108126000C745C /* DetailProtocol.swift */,
+				4AD784342D107D29000C745C /* DetailVC.swift */,
 				4AD7843C2D108136000C745C /* DetailInteractor.swift */,
-				4AD7843E2D108145000C745C /* DetailEntity.swift */,
 				4AD784402D108163000C745C /* DetailPresenter.swift */,
+				4AD7843E2D108145000C745C /* DetailEntity.swift */,
 				4AD784442D1081A7000C745C /* DetailRouter.swift */,
+				4AD7843A2D108126000C745C /* DetailProtocol.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";

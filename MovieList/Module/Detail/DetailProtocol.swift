@@ -20,7 +20,7 @@ protocol PTVDetailProtocol: AnyObject {
 
 protocol PTIDetailProtocol: AnyObject {
     var presenter: ITPDetailProtocol? { get set }
-
+    
 }
 
 protocol ITPDetailProtocol: AnyObject {

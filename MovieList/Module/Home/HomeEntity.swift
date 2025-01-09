@@ -25,9 +25,9 @@ struct TrendingTitleResponse: Codable {
     let results: [Title]
 }
 enum MovieType: String {
-  case popular /*= "popular"*/
-  case upcoming /*= "upcoming"*/
-  case top_rated/* = "top_rated"*/
+    case popular /*= "popular"*/
+    case upcoming /*= "upcoming"*/
+    case top_rated/* = "top_rated"*/
 }
 
 struct AllMoviesResponse {

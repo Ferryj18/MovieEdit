@@ -8,11 +8,8 @@
 import UIKit
 
 class HomeMovieCollTVCell: UITableViewCell {
- 
-  
-  
-  
   @IBOutlet weak var clcAllMovie: UICollectionView!
+    
   var presenter: VTPHomeProtocol?
   var dataToPopular: [Title] = []
   var dataUpcoming : [Title] = []

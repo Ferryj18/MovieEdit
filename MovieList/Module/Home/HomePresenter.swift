@@ -10,21 +10,21 @@ import UIKit
 import Foundation
 
 class HomePresenter: VTPHomeProtocol {
-  func getMovies(key: String) {
-    interactor?.getMovies(key: key)
-  }
-  
-  
-  
-  
- 
-  
+    func getMovies(key: String) {
+        interactor?.getMovies(key: key)
+    }
+    
+    
+    
+    
+    
+    
     //MARK: - Property HomePresenter
     var view: PTVHomeProtocol?
     var interactor: PTIHomeProtocol?
     var router: PTRHomeProtocol?
     var viewController : HomeVC!
-
+    
     //MARK: - Lifecycle HomePresenter
     init() {}
     
@@ -34,38 +34,39 @@ class HomePresenter: VTPHomeProtocol {
     
     //MARK: - Function HomePresenter
     
-  func getTrendingMovies(key: String){
+    func getTrendingMovies(key: String){
         interactor?.getTrendingMovies(key: key)
     }
-  
-
     
-    func startNavToDetail(data: [Title], nav: UINavigationController) {
-        router?.navToDetail(data: data, nav: nav)
+    
+    
+    func startNavToDetail(data: [Title], index: Int, nav: UINavigationController) {
+        let dataDetail = data[index]
+        router?.navToDetailData(data: dataDetail, nav: nav)
     }
     
     
 }
 
-    //MARK: - Extension HomePresenter
+//MARK: - Extension HomePresenter
 extension  HomePresenter : ITPHomeProtocol {
-  
-  func onSuccessGetMovies(data: [Title], movieType: MovieType) {
-      // Call a unified method in the view
-      view?.successGetMovies(data: data, movieType: movieType)
-  }
-
-  
-  func onSuccessGetTrendingMovies(data: [Title]) {
-    view?.successGetTrendingMovies(data: data)
-  }
-  
-  
-  
+    
+    func onSuccessGetMovies(data: [Title], movieType: MovieType) {
+        // Call a unified method in the view
+        view?.successGetMovies(data: data, movieType: movieType)
+    }
+    
+    
+    func onSuccessGetTrendingMovies(data: [Title]) {
+        view?.successGetTrendingMovies(data: data)
+    }
+    
+    
+    
     func onFailedGet(message: String) {
         view?.failedGet(message: message)
     }
     
-
+    
 }
 
