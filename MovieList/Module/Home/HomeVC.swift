@@ -134,9 +134,13 @@ extension HomeVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeMovieCollTVCell.identifier, for: indexPath) as? HomeMovieCollTVCell else {
+          
             return UITableViewCell()
         }
-        
+      // Set the presenter and parent view controller
+          cell.presenter = presenter // Set the presenter
+          cell.parentViewController = self // Set the parent view controller
+
         switch indexPath.section {
         case 0: // Popular
             cell.configure(with: dataPopular)

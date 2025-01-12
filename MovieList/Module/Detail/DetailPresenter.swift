@@ -22,12 +22,19 @@ class DetailPresenter: VTPDetailProtocol {
         self.viewController = viewController
     }
     
-    //MARK: - Function DetailNewsPresenter
+    func getVideoDetails(movieId: Int, key: String) {
+      interactor?.getVideoDetails(movieId: movieId, key: key)
+  }
     
     
 }
 
 //MARK: - Extension DetailNewsPresenter
 extension  DetailPresenter : ITPDetailProtocol {
-    
+  func onSuccessGetVideoURL(videoURL: String) {
+      view?.successGetVideoDetails(videoURL: videoURL) // Pass the video URL to the view
+  }
+func onFailedGet(message: String) {
+ view?.failedGet(message: message)
+}
 }

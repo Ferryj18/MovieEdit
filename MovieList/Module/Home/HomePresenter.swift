@@ -10,10 +10,6 @@ import UIKit
 import Foundation
 
 class HomePresenter: VTPHomeProtocol {
-    func getMovies(key: String) {
-        interactor?.getMovies(key: key)
-    }
-    
     
     
     
@@ -37,13 +33,23 @@ class HomePresenter: VTPHomeProtocol {
     func getTrendingMovies(key: String){
         interactor?.getTrendingMovies(key: key)
     }
+  func getMovies(key: String) {
+      interactor?.getMovies(key: key)
+  }
+  
     
     
     
     func startNavToDetail(data: [Title], index: Int, nav: UINavigationController) {
-        let dataDetail = data[index]
-        router?.navToDetailData(data: dataDetail, nav: nav)
-    }
+      guard index < data.count else {
+              print("Index out of bounds: \(index) for data count: \(data.count)")
+              return
+          }
+          let dataDetail = data[index] // Get the specific movie
+          router?.navToDetailData(data: dataDetail, nav: nav) // Pass the single Title object
+      }
+  
+ 
     
     
 }

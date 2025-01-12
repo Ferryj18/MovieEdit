@@ -7,7 +7,10 @@
 
 import Foundation
 
-enum navFrom{
-    case TrendingMovie
-    case AllMovie
+struct Video: Codable {
+    let id: String
+    let key: String
+    let name: String
+    let site: String
+    let type: String
 }

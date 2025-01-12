@@ -22,17 +22,22 @@ class HomeRouter: PTRHomeProtocol {
         return view
     }
     
-    func navToDetailData(data: Title, nav: UINavigationController) {
-        let view = DetailRouter.createDetailModule()
-        view.dataDetail = data
-        nav.pushViewController(view, animated: true)
-    }
-    
-    func navToDetail(data: [Title], index: Int, nav: UINavigationController) {
-        let vw = DetailRouter.createDetailModule()
-        vw.dataMovie = data
-        nav.pushViewController(vw, animated: true)
-    }
+  func navToDetailData(data: Title, nav: UINavigationController) {
+//    print("Navigating to detail for movie at index: \(index)")
+//    let detailVC = DetailRouter.createDetailModule() // Create the detail view controller
+//           detailVC.dataDetail = data // Pass the selected movie data to the detail view controller
+//           nav.pushViewController(detailVC, animated: true) // Push the detail view controller
+          let view = DetailRouter.createDetailModule()
+    view.dataDetail = data
+          nav.pushViewController(view, animated: true)
+      }
+      
+      func navToDetail(data: [Title], index: Int, nav: UINavigationController) {
+          let vw = DetailRouter.createDetailModule()
+          vw.dataMovie = data
+          nav.pushViewController(vw, animated: true)
+      }
+  
     
     
   

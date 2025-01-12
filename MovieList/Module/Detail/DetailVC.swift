@@ -19,10 +19,10 @@ class DetailVC: UIViewController {
     @IBOutlet weak var lblOverview: UILabel!
     
     var presenter: VTPDetailProtocol?
-    private var viewModel: TitlePreviewViewModel?
+//    private var viewModel: TitlePreviewViewModel?
     var dataMovie: [Title] = []
-    var dataAllMovie: [Title] = []
     var dataDetail: Title?
+  var key = "883b20661c35f38e181243f7361f28f3"
     //  var sections : sections = .TrendingMovies
     var indexNumb: Int = 0
     
@@ -34,47 +34,43 @@ class DetailVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func setUpView(){
-        self.lblTitle.text = dataDetail?.title
-        self.lblOverview.text = dataDetail?.overview
-    }
-    func setUpAction(){
-        
-    }
-    func setUpData(){
-        
-    }
+  func setUpView(){
+    self.lblTitle.text = dataDetail?.title
+    self.lblOverview.text = dataDetail?.overview
+  
+    wkMovie.autoresizingMask = [.flexibleWidth, .flexibleHeight] // Make it responsive
+  }
+  func setUpAction(){
     
-    // Method to set up the view model
-    public func configure(with model: TitlePreviewViewModel) {
-        self.viewModel = model
-    }
-    
-    // Update the UI elements
-    private func configureUI() {
-        guard let viewModel = viewModel else {
-            print("ViewModel is nil")
-            return
-        }
-        
-        // Set text for labels
-        lblTitle.text = viewModel.title
-        lblOverview.text = viewModel.titleOverview
-        
-        // Safely load YouTube video
-        if let videoId = viewModel.youtubeView.id.videoId {
-            let urlString = "https://www.youtube.com/embed/\(videoId)"
-            if let url = URL(string: urlString) {
-                let request = URLRequest(url: url)
-                wkMovie.load(request)
-            } else {
-                print("Invalid YouTube URL: \(urlString)")
+  }
+  func setUpData(){
+    guard let movieId = dataDetail?.id else {
+                print("Movie ID is nil.")
+                return
             }
-        } else {
-            print("Invalid video ID")
-        }
-        
-        // Optional: Enable developer extras for debugging
-        wkMovie.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-    }
+    presenter?.getVideoDetails(movieId: movieId, key: key)
+  }
+}
+extension DetailVC: PTVDetailProtocol {
+  func successGetVideoDetails(videoURL: String) {
+    // Load the video URL in the WKWebView
+           if let videoURL = URL(string: videoURL) {
+               let request = URLRequest(url: videoURL)
+               DispatchQueue.main.async {
+                   self.wkMovie.load(request) // Load the video in the WKWebView
+               }
+           }
+       }
+  
+
+
+   
+  func failedGet(message: String) {
+    print(message)
+    Alert.showGeneralAlert(title: "Error", message: message, viewController: self)
+    
+}
+  
+  
+  
 }

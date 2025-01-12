@@ -24,9 +24,9 @@ class HomeMovieCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+//      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
       imgAllMovie.isUserInteractionEnabled = true
-      imgAllMovie.addGestureRecognizer(tapGesture)
+//      imgAllMovie.addGestureRecognizer(tapGesture)
       
     }
   override var isSelected: Bool {
@@ -55,15 +55,15 @@ class HomeMovieCVCell: UICollectionViewCell {
       }
     }
   }
-  @objc func imageTapped(_ sender: UITapGestureRecognizer) {
-      if let viewController = parentViewController {
-          if let navigation = viewController.navigationController{
-              let vw = DetailRouter.createDetailModule()
-              navigation.pushViewController(vw, animated: true)
-          }
-      }
-  }
-  
+//  @objc func imageTapped(_ sender: UITapGestureRecognizer) {
+//      if let viewController = parentViewController {
+//          if let navigation = viewController.navigationController{
+//              let vw = DetailRouter.createDetailModule()
+//              navigation.pushViewController(vw, animated: true)
+//          }
+//      }
+//  }
+//  
   
 
 }
