@@ -11,12 +11,16 @@ import SwiftyJSON
 
 struct Title: Codable {
     let id: Int
-    let title: String
+    let originalName: String?
+    let originalTitle: String?
     let overview: String
     let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, title, overview
+        case id
+        case originalName = "original_name"
+        case originalTitle = "original_title"
+        case overview
         case posterPath = "poster_path"
     }
 }
@@ -31,6 +35,7 @@ struct AllMoviesResponse {
     let topRated: [Title]
 }
 
+<<<<<<< Updated upstream:MovieList/Home/HomeEntity.swift
 //struct TrendingTitleResponse: Codable {
 //    let results: [Title]
 //}
@@ -63,6 +68,25 @@ struct IdVideoElement: Codable {
 struct YoutubeSearchResponse: Codable {
     let items: [VideoElement]
 }
+=======
+//struct TitlePreviewViewModel {
+//    let title: String
+//    let youtubeView: VideoElement
+//    let titleOverview: String?
+//}
+//struct VideoElement: Codable {
+//    let id: IdVideoElement
+//}
+//
+//
+//struct IdVideoElement: Codable {
+//    let kind: String
+//    let videoId: String?
+//}
+//struct YoutubeSearchResponse: Codable {
+//    let items: [VideoElement]
+//}
+>>>>>>> Stashed changes:MovieList/Module/Home/HomeEntity.swift
 
 //////struct Constants {
 //////    static let API_KEY = "883b20661c35f38e181243f7361f28f3"

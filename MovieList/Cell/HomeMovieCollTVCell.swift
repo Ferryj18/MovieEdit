@@ -56,4 +56,22 @@ extension HomeMovieCollTVCell:  UICollectionViewDelegate, UICollectionViewDataSo
     
     return cell
   }
+<<<<<<< Updated upstream:MovieList/Cell/HomeMovieCollTVCell.swift
 }
+=======
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    // Get the selected title from dataDetail
+    let title = dataDetail[indexPath.row]
+    
+    // Safely unwrap the title name
+    guard let titleName = title.originalName ?? title.originalTitle else {
+      print("Title name is not available")
+            return
+        }
+      
+      // Call the presenter to handle the selection
+      presenter!.startNavToDetail(data: dataDetail, index: indexPath.item, nav: (parentViewController?.navigationController)!)
+    }
+  }
+>>>>>>> Stashed changes:MovieList/Component/Cell/HomeMenuCVC/HomeMovieCollTVCell.swift
