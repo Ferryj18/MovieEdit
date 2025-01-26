@@ -50,6 +50,7 @@ class HomeInteractor: PTIHomeProtocol  {
                     print("Decoding error: \(error.localizedDescription)")
                     let stringError = ErrorString.errorToString(error)
                     self.presenter?.onFailedGet(message: stringError)
+                    print("OK")
                 }
             case .failure(let error):
                 print("AF Request Error: \(error.localizedDescription)")
@@ -225,5 +226,7 @@ class HomeInteractor: PTIHomeProtocol  {
 //  }
 //
 //    }
+
+
 
 
