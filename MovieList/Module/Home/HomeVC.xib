@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="MovieList" customModuleProvider="target">
             <connections>
+                <outlet property="btnSearch" destination="Y7D-5d-GRh" id="Ua4-9x-tSG"/>
                 <outlet property="clcHeader" destination="T2S-0D-1kx" id="wDq-8y-BdO"/>
                 <outlet property="imgLogo" destination="U28-yi-K7q" id="bqi-Gd-nCK"/>
                 <outlet property="tblMovie" destination="hb1-wu-eay" id="YnK-d4-ffd"/>
@@ -21,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="DKu-OT-BzW">
-                    <rect key="frame" x="0.0" y="30" width="393" height="793"/>
+                    <rect key="frame" x="0.0" y="50" width="393" height="773"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEY-Sq-1Lo">
@@ -34,12 +35,23 @@
                                         <constraint firstAttribute="width" constant="50" id="buP-tQ-uaw"/>
                                     </constraints>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7D-5d-GRh">
+                                    <rect key="frame" x="333" y="5" width="50" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="OSU-CG-cvi"/>
+                                        <constraint firstAttribute="height" constant="50" id="g8g-rO-ruV"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="sear" title="Button"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Y7D-5d-GRh" secondAttribute="trailing" constant="10" id="NEQ-I1-yAy"/>
                                 <constraint firstItem="U28-yi-K7q" firstAttribute="centerY" secondItem="nEY-Sq-1Lo" secondAttribute="centerY" id="Uqg-LE-2on"/>
                                 <constraint firstAttribute="height" constant="60" id="a07-y6-fas"/>
                                 <constraint firstItem="U28-yi-K7q" firstAttribute="leading" secondItem="nEY-Sq-1Lo" secondAttribute="leading" constant="20" id="ftX-Cm-TbU"/>
+                                <constraint firstItem="Y7D-5d-GRh" firstAttribute="centerY" secondItem="nEY-Sq-1Lo" secondAttribute="centerY" id="rg2-W0-GEM"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AX-Gm-DlO">
@@ -66,10 +78,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gq3-Kt-52i">
-                            <rect key="frame" x="0.0" y="310" width="393" height="483"/>
+                            <rect key="frame" x="0.0" y="310" width="393" height="463"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hb1-wu-eay">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="483"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="463"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                             </subviews>
@@ -96,6 +108,9 @@
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="gBi-Gs-uqG"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="ZH7-Up-gQA"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="GNs-zt-hyz"/>
+                    </connections>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -103,6 +118,7 @@
         </view>
     </objects>
     <resources>
+        <image name="sear" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

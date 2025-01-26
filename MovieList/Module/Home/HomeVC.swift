@@ -11,6 +11,7 @@ class HomeVC: UIViewController{
     @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var clcHeader: UICollectionView!
     @IBOutlet weak var tblMovie: UITableView!
+    @IBOutlet weak var btnSearch: UIButton!
     
     
     var presenter: VTPHomeProtocol?
@@ -30,14 +31,36 @@ class HomeVC: UIViewController{
     }
     
     func setUpView(){
-        imgLogo.image = UIImage(named: "imageLogo")
+        imgLogo.image = UIImage(named: "image_Logo")
         //
         clcHeader.register(HomeHeaderCVCell.nib(), forCellWithReuseIdentifier: HomeHeaderCVCell.identifier)
         clcHeader.delegate = self
         clcHeader.dataSource = self
-        tblMovie.register(HomeMovieCollTVCell.nib(), forCellReuseIdentifier: HomeMovieCollTVCell.identifier)
+        clcHeader.backgroundColor = .black
+        clcHeader.isPagingEnabled = true // Enable paging
+        tblMovie.register(
+            HomeMovieCollTVCell.nib(),
+            forCellReuseIdentifier: HomeMovieCollTVCell.identifier)
         tblMovie.delegate = self
         tblMovie.dataSource = self
+        
+        btnSearch.addTarget(
+            self,
+            action: #selector(searchButtonTapped),
+            for: .touchUpInside
+        )
+        
+        btnSearch.setTitle(
+            "",
+            for: .normal
+        )
+        btnSearch.setImage(
+            UIImage(systemName: "magnifyingglass"),
+            for: .normal
+        )
+        
+        btnSearch.tintColor = .white
+        
         
     }
     
@@ -46,8 +69,37 @@ class HomeVC: UIViewController{
         presenter?.getTrendingMovies(key: key)
     }
     
+    @objc func searchButtonTapped() {
+        // Load SearchViewController from its xib file
+        print("search pressed")
+        let searchViewController = SearchView(nibName: "SearchView", bundle: nil)
+        searchViewController.modalPresentationStyle = .overFullScreen
+        searchViewController.modalTransitionStyle = .crossDissolve
+        searchViewController.delegate = self
+        present(searchViewController, animated: true, completion: nil)
+    }
+    
     
 }
+
+extension HomeVC: SearchViewDelegate {
+    func didPerformSearch(with results: String) {
+        performSearch(with: results)
+    }
+    
+    
+}
+
+extension HomeVC {
+    private func performSearch(with query: String) {
+        // Implement your search/filter logic here
+        // For example, filter data in an array:
+        let allData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        let filteredData = allData.filter { $0.lowercased().contains(query.lowercased()) }
+        print("Filtered Data: \(filteredData)")
+    }
+}
+
 extension HomeVC: PTVHomeProtocol{
     func successGetTrendingMovies(data: [Title]) {
         dataMovie = data
